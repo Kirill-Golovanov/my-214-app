@@ -1,0 +1,296 @@
+.container {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding: 1rem 1rem;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #2563eb;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
+  margin: 1.5rem 2rem;
+}
+
+.backLink:hover {
+  color: #1d4ed8;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  padding: 2rem 2rem;
+}
+
+@media (min-width: 768px) {
+  .content {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  aspect-ratio: 1;
+  background-color: #f3f4f6;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.image {
+  object-fit: contain;
+  padding: 2rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-self: start;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.description {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #4b5563;
+  background-color: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border-left: 4px solid #3b82f6;
+}
+
+.category {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.category span {
+  font-weight: 600;
+  color: #374151;
+}
+
+.reviewsSection {
+  margin-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1.5rem;
+}
+
+.reviewsSection h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.review {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.reviewRating {
+  font-weight: 600;
+  color: #f59e0b;
+  margin-bottom: 0.5rem;
+}
+
+.reviewComment {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.review small {
+  font-size: 0.875rem;
+  color: #6b7280;
+  display: block;
+}
+
+.reviewsSection p {
+  font-size: 1rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+
+
+
+
+
+
+
+/* __________ */
+
+
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.gallery {
+  position: relative;
+}
+
+.mainImage {
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f3f4f6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.mainImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.thumb {
+  width: 80px;
+  height: 80px;
+  border: 3px solid transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.thumb:hover {
+  border-color: #3b82f6;
+}
+
+.thumbActive {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px white;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.category {
+  color: #64748b;
+  font-size: 1.1rem;
+}
+
+.rating {
+  font-size: 1.2rem;
+  color: #f59e0b;
+}
+
+.price {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #dc2626;
+  margin: 0;
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #374151;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.loader, .notFound {
+  text-align: center;
+  padding: 4rem;
+  font-size: 1.5rem;
+  color: #64748b;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .title { font-size: 2rem; }
+  .price { font-size: 2.2rem; }
+}

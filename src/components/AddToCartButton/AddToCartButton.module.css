@@ -1,0 +1,50 @@
+/* AddToCartButton.module.css */
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  min-height: 48px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn:hover:not(.inCart) {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.inCart {
+  background: #10b981;
+  color: white;
+}
+
+.inCart:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+}
+
+.btn:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.4);
+  outline-offset: 2px;
+}
+
+.btn:active {
+  transform: translateY(0);
+}
