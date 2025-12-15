@@ -240,6 +240,15 @@
   color: #3b82f6;
 }
 
+/* Аватарка пользователя — ровно 24×24 px, круглая, с обрезкой */
+.avatar {
+  width: 24px;           /* = w-6 в Tailwind */
+  height: 24px;          /* = h-6 */
+  border-radius: 50%;    /* = rounded-full */
+  object-fit: cover;     /* изображение заполняет круг без искажений */
+  display: block;
+}
+
 /* На экранах ≤768px — показываем только иконку домика */
 @media (max-width: 450px) {
   .logoText {
@@ -300,3 +309,4 @@
     font-size: 1.5rem;
   }
 }
+

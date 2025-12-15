@@ -1,3 +1,6 @@
+// Применялся для создании страницы заглушки
+
+
 // src/features/user/userSlice.ts
 import { createSlice } from "@reduxjs/toolkit";
 

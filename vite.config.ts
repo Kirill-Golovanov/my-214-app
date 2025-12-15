@@ -10,4 +10,16 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"), // ← вот и всё!
     },
   },
+  server: {
+    proxy: {
+      // Все запросы к /auth проксируем на dummyjson.com
+      '/auth': {
+        target: 'https://dummyjson.com',
+        changeOrigin: true,
+        secure: false, // игнорируем HTTPS сертификат (для dev)
+        // rewrite: (path) => path.replace(/^\/auth/, '/auth') // не нужно
+      },
+    },
+  },
 });
+
