@@ -1,15 +1,33 @@
-// // src/pages/AccountPage/AccountPage.tsx
 // import { useEffect, useState } from "react";
 // import { useAppSelector, useAppDispatch } from "@/app/hooks";
-// import { loginMock, logout, setOrders } from "@/features/user/userSlice";
+// import { loginMock, logout, setOrders,} from "@/features/user/userSlice";
 // import { useQuery, useQueryClient } from "@tanstack/react-query";
 // import { LogOut, Package, Mail, Phone, Calendar } from "lucide-react";
 // import styles from "./AccountPage.module.css";
 // import { useRequireAuth } from "@/hooks/useRequireAuth";
 // import AuthModal from "@/components/AuthModal/AuthModal";
 
-// export default function AccountPage() {
 
+// // Тип пользователя (соответствует ответу API)
+// interface UserProfile {
+//   id: number;
+//   username: string;
+//   email: string;
+//   firstName: string;
+//   lastName: string;
+//   gender: string;
+//   image: string;
+//   createdAt: string; // ISO-строка
+// }
+
+// // Тип заказа (упрощённо)
+// interface Order {
+//   id: number;
+//   products: { id: number; title: string; quantity: number }[];
+//   total: number;
+// }
+
+// export default function AccountPageAlter() {
 //   const { showModal, setShowModal } = useRequireAuth();
 //   const dispatch = useAppDispatch();
 //   const queryClient = useQueryClient();
@@ -22,46 +40,81 @@
 //   const [page, setPage] = useState(1);
 //   const itemsPerPage = 5;
 
-//   // Загрузка заказов с обработкой ошибок
-//   const { data, isLoading, error, refetch } = useQuery({
-//     queryKey: ["carts", isAuthenticated],
-//     queryFn: async () => {
-//       if (!isAuthenticated) return;
+//   // Загрузка профиля пользователя
+//   const { data: userData, isLoading: isUserLoading, error: userError } =
+//     useQuery<UserProfile>({
+//       queryKey: ["profile", isAuthenticated],
+//       queryFn: async () => {
+//         if (!isAuthenticated) return null;
 
-//       const res = await fetch("https://dummyjson.com/carts");
-//       if (!res.ok) {
-//         throw new Error("Ошибка загрузки заказов");
-//       }
-//       return res.json();
-//     },
-//     enabled: isAuthenticated,
-//     refetchOnWindowFocus: false,
-//     refetchOnMount: false,
-//   });
+//         const res = await fetch("https://dummyjson.com/users/1"); // Исправлен URL
+//         if (!res.ok) throw new Error("Ошибка загрузки профиля");
+//         return res.json();
+//       },
+//       enabled: isAuthenticated,
+//       refetchOnWindowFocus: false,
+//     });
+
+//   // Загрузка заказов
+//   const { data: ordersData, isLoading: areOrdersLoading, error: ordersError } =
+//     useQuery<{ carts: Order[] }>({
+//       queryKey: ["carts", isAuthenticated],
+//       queryFn: async () => {
+//         if (!isAuthenticated) return { carts: [] };
+
+//         const res = await fetch("https://dummyjson.com/carts");
+//         if (!res.ok) throw new Error("Ошибка загрузки заказов");
+//         return res.json();
+//       },
+//       enabled: isAuthenticated,
+//       refetchOnWindowFocus: false,
+//     });
+
+//   // Сохранение профиля в Redux
+//   useEffect(() => {
+//     if (userData) {
+//       dispatch(
+//         setProfile({
+//           name: `${userData.firstName} ${userData.lastName}`,
+//           email: userData.email,
+//           phone: "+7 (XXX) XXX-XX-XX", // Пример (API не возвращает телефон)
+//           avatar: userData.image,
+//           createdAt: userData.createdAt,
+//         })
+//       );
+//     }
+//   }, [userData, dispatch]);
 
 //   // Сохранение заказов в Redux
 //   useEffect(() => {
-//     if (data?.carts) {
-//       dispatch(setOrders(data.carts));
+//     if (ordersData?.carts) {
+//       dispatch(setOrders(ordersData.carts));
 //     }
-//   }, [data, dispatch]);
+//   }, [ordersData, dispatch]);
 
-//   // Управление аутентификацией и кешем
+//   // Управление кешем при выходе
 //   useEffect(() => {
 //     if (!isAuthenticated) {
 //       dispatch(logout());
-//       queryClient.invalidateQueries({
-//         queryKey: ["carts"], // Явно указываем ключ
-//       });
-//     } else {
-//       refetch();
+//       queryClient.invalidateQueries({ queryKey: ["profile"] });
+//       queryClient.invalidateQueries({ queryKey: ["carts"] });
 //     }
-//   }, [isAuthenticated, dispatch, queryClient, refetch]);
+//   }, [isAuthenticated, dispatch, queryClient]);
+
 
 //   // Обработчик кнопки "Загрузить ещё"
 //   const loadMore = () => {
 //     setPage((prev) => prev + 1);
 //   };
+
+//   // Расчёт отображаемых заказов
+//   const displayedOrders = orders.slice(0, page * itemsPerPage);
+//   const hasMore = orders.length > displayedOrders.length;
+
+
+//   // Объединённое состояние загрузки
+//   const isLoading = isUserLoading || areOrdersLoading;
+
 
 //   // Экран: пользователь не залогинен
 //   if (!isAuthenticated) {
@@ -94,7 +147,7 @@
 //   }
 
 //   // Экран ошибки
-//   if (error) {
+//   if (userError || ordersError) {
 //     return (
 //       <div className={styles.container}>
 //         <div className={styles.wrapper}>
@@ -108,10 +161,6 @@
 //       </div>
 //     );
 //   }
-
-//   // Расчёт отображаемых заказов
-//   const displayedOrders = orders.slice(0, page * itemsPerPage);
-//   const hasMore = orders.length > displayedOrders.length;
 
 //   return (
 //     <div className={styles.container}>
@@ -134,10 +183,12 @@
 //                   <Mail size={18} />
 //                   {profile.email}
 //                 </div>
-//                 <div className={styles.contactItem}>
-//                   <Phone size={18} />
-//                   {profile.phone}
-//                 </div>
+//                 {profile.phone && (
+//                   <div className={styles.contactItem}>
+//                     <Phone size={18} />
+//                     {profile.phone}
+//                   </div>
+//                 )}
 //                 <div className={styles.joinDate}>
 //                   <Calendar size={16} />
 //                   На сайте с{" "}
@@ -146,26 +197,28 @@
 //               </div>
 //             </>
 //           ) : (
-//             <p className={styles.loading}>Загрузка профиля...</p>
+//             <p className={styles.loading}>Профиль не загружен</p>
 //           )}
 //         </div>
 
 //         {/* Раздел заказов */}
 //         <div className={styles.ordersCard}>
 //           <div className={styles.ordersHeader}>
-//             <Package size={24} className="text-blue-600" />
-//             <h3 className={styles.ordersTitle}>Мои заказы ({orders.length})</h3>
+//             <Package size={24} className={styles.icon} />
+//             <h3 className={styles.ordersTitle}>
+//               Мои заказы ({orders.length})
+//             </h3>
 //           </div>
 
 //           {orders.length === 0 ? (
-//             <p className={styles.loading}>У вас пока нет заказов</p>
+//             <p className={styles.empty}>У вас пока нет заказов</p>
 //           ) : (
 //             <div>
 //               {displayedOrders.map((cart) => (
 //                 <div key={cart.id} className={styles.orderItem}>
 //                   <div className={styles.orderHeader}>
 //                     <div>
-//                       <p className={styles.orderId}>Корзина #{cart.id}</p>
+//                       <p className={styles.orderId}>Заказ #{cart.id}</p>
 //                       <p className={styles.orderProducts}>
 //                         {cart.products?.length || 0} товаров
 //                       </p>
@@ -179,8 +232,7 @@
 
 //               {hasMore && (
 //                 <button onClick={loadMore} className={styles.loadMoreBtn}>
-//                   Загрузить ещё ({orders.length - displayedOrders.length}{" "}
-//                   заказов)
+//                   Загрузить ещё ({orders.length - displayedOrders.length} заказов)
 //                 </button>
 //               )}
 //             </div>
@@ -188,16 +240,16 @@
 //         </div>
 
 //         {/* Кнопка выхода */}
-//         <div className="text-center mt-8">
+//         <div className={styles.logoutContainer}>
 //           <button
 //             onClick={() => dispatch(logout())}
-//             className={styles.logoutBtn}
-//           >
-//             <LogOut size={18} />
-//             Выйти из аккаунта
-//           </button>
-//         </div>
+//           className={styles.logoutBtn}
+//         >
+//           <LogOut size={18} />
+//           Выйти из аккаунта
+//         </button>
 //       </div>
 //     </div>
-//   );
+//   </div>
+// );
 // }
