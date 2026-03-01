@@ -1,0 +1,11 @@
+// src/lib/queryClient.ts
+import { QueryClient } from "@tanstack/react-query";
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 минут — данные считаются свежими и не требуют повторных запросов
+      gcTime: 10 * 60 * 1000, // 10 минут — время хранения в памяти (прежде cacheTime)
+    },
+  },
+});

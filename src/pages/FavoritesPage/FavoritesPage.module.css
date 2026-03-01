@@ -1,0 +1,94 @@
+/* src/pages/FavoritesPage.module.css */
+/* .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--text);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+} */
+
+.container {
+  /* УБРАЛ max-width и margin — это уже делает Layout! */
+  padding: 2rem 1rem; /* только отступы */
+  width: 100%;        /* чтобы занимал всю доступную ширину от Layout */
+}
+
+.title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--text);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.cardWrapper {
+  position: relative;
+}
+
+.removeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.removeBtn:hover {
+  background: rgba(239,68,68,0.9);
+  transform: scale(1.1);
+}
+
+.empty {
+  text-align: center;
+  padding: 6rem 1rem;
+  color: var(--text-secondary);
+}
+
+.empty svg {
+  margin-bottom: 2rem;
+}
+
+.text {
+  font-size: 1.2rem;
+  margin: 1rem 0 2rem;
+}
+
+.link {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #3b82f6;
+  color: white;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link:hover {
+  background: #2563eb;
+}

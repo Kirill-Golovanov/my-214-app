@@ -1,0 +1,312 @@
+/* src/components/Layout/Layout.module.css */
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+}
+
+.container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ===================== ДЕСКТОП: одна строка ===================== */
+@media (min-width: 1024px) {
+  .header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    gap: 2rem;
+  }
+
+  .searchWrapper {
+    flex: 1;
+    max-width: 600px;
+  }
+
+  .rightGroup {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+}
+
+/* ===================== ПЛАНШЕТ И НИЖЕ: две строки + absolute SearchBar ===================== */
+@media (max-width: 1023px) {
+  /* Делаем header позиционированным контейнером + увеличиваем высоту */
+  .header {
+    position: relative;           /* обязательно для absolute внутри */
+    padding-bottom: 4.5rem;       /* место под SearchBar (высота строки поиска) */
+  }
+
+  /* Первая строка — логотип + навигация */
+  .header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+  }
+
+  /* SearchBar — absolute, привязан к нижней части header */
+  .searchWrapper {
+    position: absolute;
+    left: 1.5rem;     /* отступы как у .container */
+    right: 1.5rem;
+    bottom: 0.75rem;  /* расстояние от нижнего края header */
+    z-index: 10;
+  }
+
+  .searchWrapper > * {
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+  }
+
+  /* Компактная навигация */
+  .nav {
+    gap: 0.75rem;
+  }
+
+  .link {
+    padding: 0.5rem;
+    min-width: 56px;
+  }
+
+  .linkText {
+    font-size: 0.75rem;
+  }
+
+  .icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+}
+
+/* ===================== ОБЩИЕ СТИЛИ ===================== */
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #3b82f6;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0.75rem 0.9rem;
+  min-width: 72px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-accent);
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.link:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary);  
+}
+
+.link.active {
+  color: var(--primary);
+  background: rgba(59, 130, 246, 0.12);
+}
+
+.link.active .icon,
+.link.active .linkText {
+  color: var(--primary);
+}
+
+.link.active .linkText {
+  font-weight: 600;
+}
+
+.iconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: inherit;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.linkText {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.themeToggle {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+}
+
+@media (max-width: 1023px) {
+  .themeToggle {
+  top: 150px;
+}
+}
+
+/* Main & Footer */
+.main {
+  flex: 1 0 auto;
+}
+
+.content {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.footer {
+  flex-shrink: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+}
+
+.footer .container {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+
+/* Ссылка логотипа */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #3b82f6;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.logoIcon {
+  display: none; /* скрыта по умолчанию */
+  color: #3b82f6;
+}
+
+/* Аватарка пользователя — ровно 24×24 px, круглая, с обрезкой */
+.avatar {
+  width: 24px;           /* = w-6 в Tailwind */
+  height: 24px;          /* = h-6 */
+  border-radius: 50%;    /* = rounded-full */
+  object-fit: cover;     /* изображение заполняет круг без искажений */
+  display: block;
+}
+
+/* На экранах ≤768px — показываем только иконку домика */
+@media (max-width: 450px) {
+  .logoText {
+    display: none;
+  }
+
+  .logoIcon {
+    display: block;
+  }
+
+  .logo {
+    font-size: 1.6rem; /* чуть меньше, чтобы не вылезало */
+  }
+}
+
+/* На экранах ≥769px — показываем текст, иконка скрыта */
+@media (min-width: 451px) {
+  .logoText {
+    display: inline;
+  }
+
+  .logoIcon {
+    display: none;
+  }
+}
+
+
+
+/* Скрываем текст под иконками на экранах ≤580px */
+@media (max-width: 580px) {
+  .linkText {
+    display: none !important;
+  }
+
+  /* Делаем иконки чуть крупнее и центрируем */
+  .link {
+    padding: 0.75rem;
+    min-width: 56px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .iconWrapper {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Уменьшаем отступы между иконками */
+  .nav {
+    gap: 0.5rem;
+  }
+
+  /* Логотип — только иконка домика (уже есть) */
+  .logo {
+    font-size: 1.5rem;
+  }
+}
+
